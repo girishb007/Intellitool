@@ -1,0 +1,5 @@
+fastapi==0.109.0
+pydantic==1.9.1
+uvicorn==0.25.0
+sqlalchemy==2.0.27
+greenlet==3.0.3

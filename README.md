@@ -1,1 +1,0 @@
-# Intellitool - Your AI companion
