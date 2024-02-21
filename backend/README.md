@@ -18,4 +18,12 @@ docker compose up --build
 docker run -p 8000:8000 intellitool-server
 ```
 
+Configure Database:
+Install postgres and create "intellitool" database
+```
+CREATE DATABASE intellitool;
+```
+ 
+
 ## REST APIs
+API documentation: http://localhost:8000/docs
