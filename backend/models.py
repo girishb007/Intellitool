@@ -20,7 +20,6 @@ class UserRole(enum.Enum):
 #     published = Column(Boolean, server_default='TRUE')
 #     created_at = Column(TIMESTAMP(timezone=True), server_default=text('now()'))
 
-
 class User(Base):
     __tablename__ = "user"
 
