@@ -20,7 +20,7 @@ class UserRole(enum.Enum):
 #     published = Column(Boolean, server_default='TRUE')
 #     created_at = Column(TIMESTAMP(timezone=True), server_default=text('now()'))
 
-class User(Base):
+class UserModel(Base):
     __tablename__ = "user"
 
     id = Column(Integer,primary_key=True,nullable=False)
@@ -28,7 +28,7 @@ class User(Base):
     password = Column(String,nullable=False)
     role = Column(Enum(UserRole), default=UserRole.student)
 
-class Student(Base):
+class StudentModel(Base):
     __tablename__ = "student"
 
     id = Column(Integer,primary_key=True,nullable=False)
@@ -37,15 +37,16 @@ class Student(Base):
     term = Column(String,nullable=False)
     enrolled_courses = Column(JSON, nullable=False, default=[])  # Using JSON datatype for storing lists
 
-class Professor(Base):
+class ProfessorModel(Base):
     __tablename__ = "professor"
 
     id = Column(Integer,primary_key=True,nullable=False)
     name = Column(String,nullable=False)
     description = Column(String,nullable=True)
+    field = Column(String,nullable=True)
     courses = Column(JSON, nullable=False, default=[])  # Using JSON datatype for storing lists
 
-class Course(Base):
+class CourseModel(Base):
     __tablename__ = "course"
 
     id = Column(Integer,primary_key=True,nullable=False)
@@ -54,7 +55,7 @@ class Course(Base):
     term = Column(String,nullable=False)
     students = Column(JSON, nullable=False, default=[])  # Using JSON datatype for storing lists
     professor_id = Column(Integer, ForeignKey('professor.id'), nullable=False)  # Foreign key to Professor table
-    professor = relationship("Professor")
+    professor = relationship("ProfessorModel")
     zoom = Column(String,nullable=False)
     assignments = Column(JSON, nullable=False, default=[])  # Using JSON datatype for storing lists
 
