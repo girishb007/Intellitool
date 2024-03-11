@@ -4,7 +4,7 @@ from typing import List
 class AddProfessor(BaseModel):
     name: str
     description: str = None
-    courses: List[str] = Field(default=[])
+    courses: List[int] = Field(default=[])
     field: str
 
 class ProfAddCourse(BaseModel):

@@ -74,12 +74,22 @@ def prof_add_course(
 
             # Retrieve the ProfessorModel object and update its courses
             print("ENTERING THE BLOCK")
-            professor_obj = db.query(ProfessorModel).get(professor_id)
-            if professor_obj:
+            # professor_obj = db.query(ProfessorModel).get(professor_id)
+            professor_put = db.query(ProfessorModel).filter(ProfessorModel.id == professor_id)
+            professor_put.first()
+            if professor_put:
+                professor_obj = db.query(ProfessorModel).get(professor_id)
                 if professor_obj.courses is None:
                     professor_obj.courses = []  # Initialize courses list if it's None
-                print("New course -> ", new_course.id)
                 professor_obj.courses.append(new_course.id)
+                professor_dict = {
+                    'id': professor_obj.id,
+                    'name': professor_obj.name,
+                    'description': professor_obj.description,
+                    'field': professor_obj.field,
+                    'courses': professor_obj.courses
+                }
+                professor_put.update(professor_dict, synchronize_session=False)
                 db.commit()  # Commit the changes to update the courses list
                 print("ProfessorModel updated successfully")
             else:
