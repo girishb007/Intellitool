@@ -45,6 +45,7 @@ class ProfessorModel(Base):
     description = Column(String,nullable=True)
     field = Column(String,nullable=True)
     courses = Column(JSON, nullable=False, default=[])  # Using JSON datatype for storing lists
+    # courses = relationship("CourseModel", cascade="all, delete-orphan")  # Define cascade behavior
 
 class CourseModel(Base):
     __tablename__ = "course"
@@ -54,8 +55,9 @@ class CourseModel(Base):
     description = Column(String,nullable=True)
     term = Column(String,nullable=False)
     students = Column(JSON, nullable=False, default=[])  # Using JSON datatype for storing lists
-    professor_id = Column(Integer, ForeignKey('professor.id'), nullable=False)  # Foreign key to Professor table
-    professor = relationship("ProfessorModel")
+    professor_id = Column(Integer, nullable=False)
+    # professor_id = Column(Integer, ForeignKey('professor.id'), nullable=False)  # Foreign key to Professor table
+    # professor = relationship("ProfessorModel")
     zoom = Column(String,nullable=False)
     assignments = Column(JSON, nullable=False, default=[])  # Using JSON datatype for storing lists
 

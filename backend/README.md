@@ -25,5 +25,14 @@ CREATE DATABASE intellitool;
 ```
  
 
+Few DB commands in psq:
+```
+\l  -> lists database
+DROP database intellitool;
+\c intellitool;     -> connect to the database
+\d  OR  \dt         -> lists schemas
+DELETE from <table name>;
+```
+
 ## REST APIs
 API documentation: http://localhost:8000/docs

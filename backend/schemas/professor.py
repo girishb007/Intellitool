@@ -6,3 +6,11 @@ class AddProfessor(BaseModel):
     description: str = None
     courses: List[str] = Field(default=[])
     field: str
+
+class ProfAddCourse(BaseModel):
+    id: str
+    name: str
+    description: str = None
+    term: str
+    zoom: str
+    assignments: List[str] = []
