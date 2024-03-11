@@ -1,0 +1,122 @@
+{
+	"info": {
+		"_postman_id": "4df2cc39-c3b6-4381-8736-aa627e71898b",
+		"name": "Intellitool",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "27881202"
+	},
+	"item": [
+		{
+			"name": "professor",
+			"item": [
+				{
+					"name": "professors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8000/intellitool/users"
+					},
+					"response": []
+				},
+				{
+					"name": "profAddCourse",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"id\": 110,\r\n        \"name\": \"E10\",\r\n        \"description\": \"E10 Labs\",\r\n        \"term\": \"Spring 2024\",\r\n        \"zoom\": \"sjsu.zoom.in/yken\"\r\n    },\r\n    {\r\n        \"id\": 111,\r\n        \"name\": \"Python\",\r\n        \"description\": \"Python for beginners\",\r\n        \"term\": \"Spring 2024\",\r\n        \"zoom\": \"sjsu.zoom.in/yken\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/intellitool/profAddCourse?professor=Ken Youseffi",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"intellitool",
+								"profAddCourse"
+							],
+							"query": [
+								{
+									"key": "professor",
+									"value": "Ken Youseffi"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "addProfessor - ADMIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Ken Youseffi\",\r\n    \"description\": \"MS PhD\",\r\n    \"field\": \"Mechanical\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8000/intellitool/admin/addProfessor"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "students",
+			"item": [
+				{
+					"name": "students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8000/intellitool/users"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "addUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"username\": \"nimish\",\r\n    \"password\": \"1234\",\r\n    \"role\": \"student\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8000/intellitool/addUser"
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8000/intellitool/users"
+			},
+			"response": []
+		}
+	]
+}
