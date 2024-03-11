@@ -36,3 +36,39 @@ DELETE from <table name>;
 
 ## REST APIs
 API documentation: http://localhost:8000/docs
+import Postman file backend\postman\Intellitool.postman_collection.json
+
+```
+1. POST /intellitool/addUser
+    {
+    "id": 1,
+    "username": "nimish",
+    "password": "1234",
+    "role": "student"
+    }
+2. POST /intellitool/admin/addProfessor
+    {
+    "name": "Ken Youseffi",
+    "description": "MS PhD",
+    "field": "Mechanical"
+    }
+3. GET /intellitool/users
+4. GET /intellitool/professors
+5. POST /intellitool/profAddCourse?professor="Ken Youseffi"
+    [
+    {
+        "id": 110,
+        "name": "E10",
+        "description": "E10 Labs",
+        "term": "Spring 2024",
+        "zoom": "sjsu.zoom.in/yken"
+    },
+    {
+        "id": 111,
+        "name": "Python",
+        "description": "Python for beginners",
+        "term": "Spring 2024",
+        "zoom": "sjsu.zoom.in/yken"
+    }
+    ]
+```
