@@ -56,8 +56,10 @@ export const Layout = ({ children }: LayoutProps) => {
 const navbarProps: NavBarProps = {
   links: [
     { href: '/', label: 'Home' },
+    { href: '/dashboard', label: 'Dashboard' },
     { href: '/summariser', label: 'Summarise' },
     { href: '/explainer', label: 'Explain' },
     { href: '/flash-card-generator', label: 'Flash Card' }
+    
   ]
 };

@@ -45,7 +45,7 @@ const appFeatureSections: AppFeatureSectionProps[] = [
       alt: 'explainer feature preview'
     },
     description:
-      'No more doubts holding you back! \
+      'No more questions holding you back! \
       Our interactive platform provides instant, intelligent responses to your queries, empowering you to clarify new concepts whenever you need.',
     href: '/explainer'
   },
