@@ -1,5 +1,6 @@
 import { Layout } from '@/components/layout';
 import '@/styles/globals.css';
+import styles from '../../components/dashboard/dashboard.module.css'; 
 import { ChakraProvider } from '@chakra-ui/react';
 import type { AppProps } from 'next/app';
 
