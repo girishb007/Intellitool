@@ -1,9 +1,12 @@
 from fastapi import APIRouter, Response, Depends, status
-from schemas import professor
+from schemas import course
 from typing import List
 from sqlalchemy.orm import Session, Query
 from db.database import get_db
-from models import ProfessorModel, CourseModel
+from models import ProfessorModel, CourseModel, StudentModel
+import logging
+
+log = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -28,10 +31,12 @@ def get_professors(
     professors = query.all()  # Execute the query to get all professors
     return professors
 
+
+
 @router.post("/profAddCourse")
 def prof_add_course(
     response: Response,
-    body: List[professor.ProfAddCourse],
+    body: List[course.ProfAddCourse],
     professor: str = None,
     professor_id: str = None,
     db: Session = Depends(get_db)
@@ -73,7 +78,7 @@ def prof_add_course(
             
 
             # Retrieve the ProfessorModel object and update its courses
-            print("ENTERING THE BLOCK")
+            log.info("ENTERING THE BLOCK")
             # professor_obj = db.query(ProfessorModel).get(professor_id)
             professor_put = db.query(ProfessorModel).filter(ProfessorModel.id == professor_id)
             professor_put.first()
@@ -91,17 +96,37 @@ def prof_add_course(
                 }
                 professor_put.update(professor_dict, synchronize_session=False)
                 db.commit()  # Commit the changes to update the courses list
-                print("ProfessorModel updated successfully")
+                log.info("ProfessorModel updated successfully")
             else:
-                print("ProfessorModel not found")
+                log.info("ProfessorModel not found")
                 resp.append("Error: Professor not found")
                 continue
-            print("BLOCK END")
+            log.info("BLOCK END")
             resp.append("Success")
         except Exception as e:
-            print("Error:", e)
+            log.error("Error:", e)
             resp.append("Error")
     return resp
 
-
-
+@router.get("/profDelCourse/{course_id}")
+def prof_del_course(
+    course_id: int,
+    db: Session = Depends(get_db)
+):
+    """
+    API endpoint to delete all the courses
+    1. Delete from the students table
+    2. Delete from the professors table
+    3. Delete from the Course table
+    """
+    
+    query: Query = db.query(StudentModel)
+    students = query.all()  # Execute the query to get all professors
+    import pdb;
+    
+    pdb.set_trace()
+    
+    
+    
+    
+    return students

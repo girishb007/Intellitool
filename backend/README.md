@@ -6,10 +6,25 @@ Python FastAPI application deployable from the Docker image.
 
 ## Usage
 Requires Python>=3.10.5
+```
+brew install python@3.10
+python3.10 --version
+python3.10 -m pip install --upgrade pip
+alias python=python3.10
+```
+
+
 To run locally:
 ```
 pip install -r requirements.txt
 uvicorn main:app --reload
+```
+
+## DEBUG
+Error during bringing up the application:
+Make sure to have python>=3.10.5
+```
+brew uninstall python@3.11
 ```
 
 Deploy through Docker:
@@ -54,7 +69,8 @@ import Postman file backend\postman\Intellitool.postman_collection.json
     }
 3. GET /intellitool/users
 4. GET /intellitool/professors
-5. POST /intellitool/profAddCourse?professor="Ken Youseffi"
+5. GET /intellitool/courses
+6. POST /intellitool/profAddCourse?professor="Ken Youseffi"
     [
     {
         "id": 110,

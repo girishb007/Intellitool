@@ -10,7 +10,7 @@ from sqlalchemy.orm import sessionmaker
 
 # SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{password}@{host}:{port}/{database}"
 
-SQLALCHEMY_DATABASE_URL = 'postgresql://postgres:19031998@localhost/intellitool'
+SQLALCHEMY_DATABASE_URL = 'postgresql://admin:1234@localhost/intellitool'
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
