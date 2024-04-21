@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Response, Depends, status
+from fastapi import APIRouter, Response, Depends, status, Path
 from schemas import course
 from typing import List
 from sqlalchemy.orm import Session, Query
@@ -78,7 +78,7 @@ def prof_add_course(
             
 
             # Retrieve the ProfessorModel object and update its courses
-            log.info("ENTERING THE BLOCK")
+            log.info("Add course in Professor Model")
             # professor_obj = db.query(ProfessorModel).get(professor_id)
             professor_put = db.query(ProfessorModel).filter(ProfessorModel.id == professor_id)
             professor_put.first()
@@ -110,7 +110,7 @@ def prof_add_course(
 
 @router.get("/profDelCourse/{course_id}")
 def prof_del_course(
-    course_id: int,
+    course_id: int = Path(...),
     db: Session = Depends(get_db)
 ):
     """
@@ -119,14 +119,10 @@ def prof_del_course(
     2. Delete from the professors table
     3. Delete from the Course table
     """
+    query: Query = db.query(CourseModel).filter(CourseModel.id == course_id).first()
+    course = query.name
     
     query: Query = db.query(StudentModel)
     students = query.all()  # Execute the query to get all professors
-    import pdb;
-    
-    pdb.set_trace()
-    
-    
-    
     
     return students

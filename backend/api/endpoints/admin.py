@@ -8,6 +8,9 @@ from db.database import get_db
 from models import ProfessorModel, UserModel, StudentModel
 from api.endpoints import user
 import random
+import logging
+
+log = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -86,7 +89,7 @@ async def approve(
         
     try:
         if role == "student":
-            print(body)
+            log.info("body: {body}")
             for stu in body:
                 print(stu.username)
                 if stu.username:
@@ -98,7 +101,7 @@ async def approve(
                 if not user_details:
                     raise HTTPException(status_code=400, detail="No user found with the given id/username")
                 
-                print(user_details)
+
                 new_stu = StudentModel()
                 new_stu.id = user_details.id
                 new_stu.name = user_details.username
@@ -107,7 +110,7 @@ async def approve(
                 db.add(new_stu)
                 db.commit()
                 db.refresh(new_stu)
-                print("user added username: {username}")
+                log.info("user added username: {username}")
                     
         elif role == "teacher":
             for prof in body:
@@ -124,11 +127,11 @@ async def approve(
                 new_prof = ProfessorModel()
                 new_prof.id = user_details.id
                 new_prof.name = user_details.username
-                if prof.get("field"):
+                if prof.field:
                     new_prof.field = prof.get("field")
                 else:
                     new_prof.field = "Computer Science"
-                if prof.get("description"):
+                if prof.description:
                     new_prof.description = prof.get("description")
                 else:
                     new_prof.description = ""
@@ -140,4 +143,3 @@ async def approve(
         response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
         return {"error": "Failed to approve user due to database integrity error"}
 
-        

@@ -9,3 +9,4 @@ class ProfAddCourse(BaseModel):
     term: str
     zoom: str
     assignments: List[str] = []
+
