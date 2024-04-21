@@ -59,14 +59,26 @@ import Postman file backend\postman\Intellitool.postman_collection.json
     "id": 1,
     "username": "nimish",
     "password": "1234",
-    "role": "student"
+    "role": "student"      // student/professor
     }
 2. POST /intellitool/admin/addProfessor
-    {
-    "name": "Ken Youseffi",
-    "description": "MS PhD",
-    "field": "Mechanical"
-    }
+   params: role: student
+   body:
+    [
+        {
+            "username": "nimish",
+            "id": 1     // Optional
+        }
+    ]
+
+    params: role: teacher
+    body:
+        {
+            "username": "Ken Youseffi",
+            "id": 991,  // Optional
+            "field": "Mechanical",  // Choose from the drop down
+            "description": "",  // Optional
+        }
 3. GET /intellitool/users
 4. GET /intellitool/professors
 5. GET /intellitool/courses
