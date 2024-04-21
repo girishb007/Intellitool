@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "4df2cc39-c3b6-4381-8736-aa627e71898b",
 		"name": "Intellitool",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "27881202"
 	},
 	"item": [
@@ -14,7 +14,17 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8000/intellitool/users"
+						"url": {
+							"raw": "localhost:8000/intellitool/professors",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"intellitool",
+								"professors"
+							]
+						}
 					},
 					"response": []
 				},
@@ -33,14 +43,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8000/intellitool/profAddCourse?professor=Ken Youseffi",
+							"raw": "localhost:8000/intellitool/addCourse?professor=Ken Youseffi",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
 								"intellitool",
-								"profAddCourse"
+								"addCourse"
 							],
 							"query": [
 								{
@@ -58,7 +68,7 @@
 			"name": "admin",
 			"item": [
 				{
-					"name": "addProfessor - ADMIN",
+					"name": "addProfessor - DISABLED",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -71,7 +81,47 @@
 								}
 							}
 						},
-						"url": "localhost:8000/intellitool/admin/addProfessor"
+						"url": {
+							"raw": "localhost:8000/intellitool/admin/addProfessor",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"intellitool",
+								"admin",
+								"addProfessor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "approveUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {}\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/intellitool/admin/approve",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"intellitool",
+								"admin",
+								"approve"
+							]
+						}
 					},
 					"response": []
 				}
@@ -84,12 +134,73 @@
 					"name": "students",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": "localhost:8000/intellitool/users"
+						"header": []
 					},
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "courses",
+			"item": [
+				{
+					"name": "courses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/intellitool/courses",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"intellitool",
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profDelCourses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/intellitool/profDelCourse",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"intellitool",
+								"profDelCourse"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/intellitool/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"intellitool",
+						"users"
+					]
+				}
+			},
+			"response": []
 		},
 		{
 			"name": "addUser",
@@ -105,7 +216,17 @@
 						}
 					}
 				},
-				"url": "localhost:8000/intellitool/addUser"
+				"url": {
+					"raw": "localhost:8000/intellitool/addUser",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"intellitool",
+						"addUser"
+					]
+				}
 			},
 			"response": []
 		},
@@ -114,7 +235,17 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "localhost:8000/intellitool/users"
+				"url": {
+					"raw": "localhost:8000/intellitool/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"intellitool",
+						"users"
+					]
+				}
 			},
 			"response": []
 		}
