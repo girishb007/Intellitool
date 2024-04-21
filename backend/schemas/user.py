@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
 from enum import Enum
 
@@ -13,3 +13,8 @@ class CreateUser(BaseModel):
     password: str
     role: UserRole
 
+class ApproveUser(BaseModel):
+    id: Optional[int]
+    username: Optional[str]
+    field: Optional[str]
+    description: Optional[str]
