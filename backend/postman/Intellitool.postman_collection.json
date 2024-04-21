@@ -29,6 +29,26 @@
 					"response": []
 				},
 				{
+					"name": "profDelCourses",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/intellitool/profDelCourse/111",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"intellitool",
+								"profDelCourse",
+								"111"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "profAddCourse",
 					"request": {
 						"method": "POST",
@@ -176,11 +196,11 @@
 				{
 					"name": "courseDrop",
 					"request": {
-						"method": "POST",
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"course_ids\": [\"E10\"]\n}",
+							"raw": "{\n    \"courses\": [\"E10\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -188,7 +208,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8000/intellitool/students/courseEnrollment?student_id=1",
+							"raw": "localhost:8000/intellitool/students/courseDrop?student_id=1",
 							"host": [
 								"localhost"
 							],
@@ -196,7 +216,7 @@
 							"path": [
 								"intellitool",
 								"students",
-								"courseEnrollment"
+								"courseDrop"
 							],
 							"query": [
 								{
@@ -231,93 +251,60 @@
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
 				{
-					"name": "profDelCourses",
+					"name": "users",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8000/intellitool/profDelCourse",
+							"raw": "localhost:8000/intellitool/users",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
 								"intellitool",
-								"profDelCourse"
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"username\": \"nimish\",\r\n    \"password\": \"1234\",\r\n    \"role\": \"student\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/intellitool/addUser",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"intellitool",
+								"addUser"
 							]
 						}
 					},
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "users",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8000/intellitool/users",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"intellitool",
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "addUser",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1,\r\n    \"username\": \"nimish\",\r\n    \"password\": \"1234\",\r\n    \"role\": \"student\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8000/intellitool/addUser",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"intellitool",
-						"addUser"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "users",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8000/intellitool/users",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"intellitool",
-						"users"
-					]
-				}
-			},
-			"response": []
 		}
 	]
 }

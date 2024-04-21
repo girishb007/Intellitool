@@ -54,6 +54,7 @@ API documentation: http://localhost:8000/docs
 import Postman file backend\postman\Intellitool.postman_collection.json
 
 ```
+USERS:
 1. POST /intellitool/addUser
     {
     "id": 1,
@@ -61,7 +62,10 @@ import Postman file backend\postman\Intellitool.postman_collection.json
     "password": "1234",
     "role": "student"      // student/professor
     }
-2. POST /intellitool/admin/addProfessor
+2. GET /intellitool/users
+
+ADMIN:
+1. POST /intellitool/admin/approveUser
    params: role: student
    body:
     [
@@ -73,16 +77,35 @@ import Postman file backend\postman\Intellitool.postman_collection.json
 
     params: role: teacher
     body:
+    [
         {
             "username": "Ken Youseffi",
             "id": 991,  // Optional
             "field": "Mechanical",  // Choose from the drop down
             "description": "",  // Optional
         }
-3. GET /intellitool/users
-4. GET /intellitool/professors
-5. GET /intellitool/courses
-6. POST /intellitool/profAddCourse?professor="Ken Youseffi"
+    ]
+
+PROFESSOR:
+1. GET /intellitool/professors
+2. POST /intellitool/profAddCourse?professor="Ken Youseffi"
+    [
+        {
+            "id": 110,
+            "name": "E10",
+            "description": "E10 Labs",
+            "term": "Spring 2024",
+            "zoom": "sjsu.zoom.in/yken"
+        },
+        {
+            "id": 111,
+            "name": "Python",
+            "description": "Python for beginners",
+            "term": "Spring 2024",
+            "zoom": "sjsu.zoom.in/yken"
+        }
+    ]
+3. DELETE /intellitool/profDelCourse?professor="Ken Youseffi"
     [
     {
         "id": 110,
@@ -99,4 +122,28 @@ import Postman file backend\postman\Intellitool.postman_collection.json
         "zoom": "sjsu.zoom.in/yken"
     }
     ]
+
+STUDENTS:
+1. GET /intellitool/students
+2. POST /intellitool/students/courseEnrollment
+   Params:
+   student_id
+
+   Body:
+   {
+    "courses": ["E10"]
+    }
+3. DELETE /intellitool/students/courseDrop
+   Params:
+   student_id
+
+   Body:
+   {
+    "courses": ["E10"]
+    }
+
+
+COURSE:
+1. GET /intellitool/courses
+
 ```

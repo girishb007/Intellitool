@@ -116,7 +116,7 @@ def course_enroll(
             res.append("Error {e}")
     return res
         
-@router.post("/students/courseDrop")
+@router.delete("/students/courseDrop")
 def course_drop(
     response: Response,
     body: student.dropCourse,
