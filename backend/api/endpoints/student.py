@@ -114,8 +114,72 @@ def course_enroll(
     except Exception as e:
             log.error("Error:", e)
             res.append("Error {e}")
-            
-            
     return res
         
+@router.post("/students/courseDrop")
+def course_drop(
+    response: Response,
+    body: student.dropCourse,
+    db: Session = Depends(get_db),
+    student_id: int = None,
+):
+    res = []
+    student = db.query(StudentModel).filter(StudentModel.id == student_id)
+    
+    if not student:
+        raise HTTPException(status_code=404, detail="student_id NOT FOUND")
+    student_obj = student.first()
+    student_name = student_obj.name
+    enrolled_courses = student_obj.enrolled_courses
+
+    # Updating the course and student table
+    try:
+        for course in body.courses:
+            crs = db.query(CourseModel).filter(CourseModel.name == course)
+            if crs.first():
+                c = crs.first()
+                if not c:
+                    res.append("Course {course} does not exists")
+                    continue
+                enrolled_students = c.students
+                if student_name in enrolled_students:
+                    enrolled_students.remove(student_name)
+                else:
+                    res.append("Student NOT FOUND in Course table")
+                    continue
+                course_dict = {
+                    "id": c.id,
+                    "name": c.name,
+                    "description": c.description,
+                    "term": c.term,
+                    "students": enrolled_students,
+                    "professor_id": c.professor_id,
+                    "zoom": c.zoom,
+                    "assignments": c.assignments,
+                }
+                crs.update(course_dict, synchronize_session=False)
+                db.commit()
+            else:
+                res.append("course {course} NOT FOUND")
+                continue
+                
+            if course not in enrolled_courses:
+                res.append("COURSE DOESN'T EXIST")
+                continue
+            enrolled_courses.remove(course)
+            student_dict = {
+                "id": student_obj.id,
+                "name": student_obj.name,
+                "term": student_obj.term,
+                "enrolled_courses": enrolled_courses
+            }
+            student.update(student_dict, synchronize_session=False)
+            db.commit()
+            msg = "Course {course} removed"
+            log.info(msg)
+            res.append(msg)
+    except Exception as e:
+            log.error("Error:", e)
+            res.append("Error {e}")
+    return res
         
