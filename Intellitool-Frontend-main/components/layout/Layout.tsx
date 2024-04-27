@@ -13,10 +13,6 @@ export const Layout = ({ children }: LayoutProps) => {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-          name="author"
-          content="Jing Qiang | Siang Meng | Tze Yeong | Yan Tat"
-        />
         <meta name="title" content="Intellitool" />
         <meta
           name="description"
