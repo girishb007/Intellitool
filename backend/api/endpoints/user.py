@@ -4,10 +4,38 @@ from sqlalchemy.orm import Session, Query
 from sqlalchemy.exc import IntegrityError
 from db.database import get_db
 from models import UserModel
-
+import os
+import boto3
 from api.endpoints import student
+from openai import OpenAI
+
+
+OpenAI.api_key = 'sk-proj-Q3Em8tl42Ds1GkUPFI3nT3BlbkFJjeoEbGc0fTlSCTRp5KXk'
+os.environ['OPENAI_API_KEY'] = 'sk-proj-Q3Em8tl42Ds1GkUPFI3nT3BlbkFJjeoEbGc0fTlSCTRp5KXk'
+client = OpenAI()
 
 router = APIRouter()
+
+@router.get("/getSummaries")
+def testConn():
+    #return "Working"
+    audio_file= open("/Users/spartan/Desktop/audiotestfile.mp3", "rb")
+    transcript = client.audio.transcriptions.create(
+    model="whisper-1", 
+    file=audio_file
+    )
+
+    return transcript.text
+
+
+@router.get("/downloadfile")
+def getFile():
+    s3 = boto3.client('s3', aws_access_key_id="AKIA3FO4UZ66TYQMK6NB" , aws_secret_access_key="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")
+    s3.download_file('intellitool-bucket', 'audiotestfile.mp3', 'download') 
+ 
+
+
+
 
 @router.get("/users")
 def get_users(
