@@ -8,6 +8,7 @@ import os
 import boto3
 from api.endpoints import student
 from openai import OpenAI
+from moviepy import editor as mp
 
 
 OpenAI.api_key = 'sk-proj-Q3Em8tl42Ds1GkUPFI3nT3BlbkFJjeoEbGc0fTlSCTRp5KXk'
@@ -19,6 +20,8 @@ router = APIRouter()
 @router.get("/getSummaries")
 def testConn():
     #return "Working"
+
+    log.info("Getting the transcribed text")
     audio_file= open("/Users/spartan/Desktop/audiotestfile.mp3", "rb")
     transcript = client.audio.transcriptions.create(
     model="whisper-1", 
@@ -27,6 +30,13 @@ def testConn():
 
     return transcript.text
 
+@router.get("/videoToAudioConverter")
+def convertVideo():
+    # Insert Local Video File Path 
+    clip = mp.VideoFileClip(r"/Users/spartan/Desktop/testvideofile.mov")
+    
+    # Insert Local Audio File Path
+    clip.audio.write_audiofile(r"/Users/spartan/Desktop/convertedvideofile.mp3")
 
 @router.get("/downloadfile")
 def getFile():
@@ -34,6 +44,7 @@ def getFile():
     s3.download_file('intellitool-bucket', 'audiotestfile.mp3', 'download') 
  
 
+@router.post("/uploadfile")
 
 
 
