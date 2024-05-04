@@ -10,7 +10,8 @@ DB_PORT = "5432"  # Default PostgreSQL port
 DB_NAME = "intellitool"
 
 # Construct the database URL using the credentials
-SQLALCHEMY_DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+# SQLALCHEMY_DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+SQLALCHEMY_DATABASE_URL = 'postgresql://admin:1234@localhost/intellitool'
 
 # Create the SQL Alchemy engine
 engine = create_engine(SQLALCHEMY_DATABASE_URL)

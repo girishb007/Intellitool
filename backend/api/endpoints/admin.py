@@ -2,6 +2,7 @@ from fastapi import APIRouter, Response, Depends, status, HTTPException
 from typing import List
 from schemas import professor
 from schemas import user as user_schema
+from sqlalchemy import MetaData, Table
 from sqlalchemy.orm import Session, Query
 from sqlalchemy.exc import IntegrityError
 from db.database import get_db
@@ -143,3 +144,24 @@ async def approve(
         response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
         return {"error": "Failed to approve user due to database integrity error"}
 
+
+@router.post("/dbCleanup")
+async def db_cleanup(
+    response: Response,
+    db: Session = Depends(get_db),
+):
+    db_collections = ["student", "professor", "student", "user"]
+    metadata = MetaData()
+    for collection in set(db_collections):
+       try:
+           table = Table(collection, metadata, postgresql_autoload=True, autoload_with=db.get_bind())
+           delete_query = table.delete()
+           db.execute(delete_query)
+           db.commit()
+       except Exception as e:
+           db.rollback()
+           response.status_code = 500
+           return {"error": str(e)}
+
+    response.status_code = 200
+    return {"message": "Database cleanup successful."}

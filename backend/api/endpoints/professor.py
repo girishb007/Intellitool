@@ -108,7 +108,7 @@ def prof_add_course(
             resp.append("Error")
     return resp
 
-@router.get("/profDelCourse/{course_id}")
+@router.delete("/profDelCourse/{course_id}")
 def prof_del_course(
     course_id: int = Path(...),
     db: Session = Depends(get_db)
