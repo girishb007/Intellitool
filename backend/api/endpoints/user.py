@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Response, Depends, HTTPException
+from fastapi import APIRouter, File, Response, Depends, HTTPException, UploadFile
 from schemas import user
 from sqlalchemy.orm import Session, Query
 from sqlalchemy.exc import IntegrityError
@@ -21,7 +21,6 @@ router = APIRouter()
 def testConn():
     #return "Working"
 
-    log.info("Getting the transcribed text")
     audio_file= open("/Users/spartan/Desktop/audiotestfile.mp3", "rb")
     transcript = client.audio.transcriptions.create(
     model="whisper-1", 
@@ -89,3 +88,21 @@ async def add_user(
         return new_user
     except IntegrityError:
         raise HTTPException(status_code=500, detail="Failed to add user due to database integrity error")
+
+@router.post("/uploadFile")
+async def upload_image(upload_file:UploadFile =File(...)):
+
+    if '.jpg' in upload_file.filename or '.jpeg' in upload_file.filename or '.png' in upload_file.filename or '.pdf' in upload_file.filename or '.mp3' in upload_file.filename or '.mp4' in upload_file.filename:
+        file_save_path="./uploads/"+upload_file.filename
+        if os.path.exists("./uploads") == False:
+            os.makedirs("./uploads")
+
+        with open(file_save_path, "wb") as f:
+            f.write(upload_file.file.read())
+
+        if os.path.exists(file_save_path):
+            return {"File save path":file_save_path,"message": "File saved successfully"}
+        else:
+            return {"error":"File Not saved !!!"}
+    else:
+        return {"error": "File Type is not valid please upload only jpg,jpeg, png, pdf, mp3 and .mp4 only"}
