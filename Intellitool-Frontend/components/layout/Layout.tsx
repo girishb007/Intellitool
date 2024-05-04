@@ -35,34 +35,34 @@
         );
       } else if (role === 'teacher') {
         drawerLinks.push(
-          { href: '/courses', label: 'Subjects' },
-          { href: '/addCourses', label: 'Courses' },
-          { href: '/collections', label: 'Collections' },
-          { href: '/tasks', label: 'Task' },
-          { href: '/coursework', label: 'CourseWork' },
-          { href: '/search', label: 'Zoom Lectures' },
-          { href: '/pdf', label: 'PDF' },
-          { href: '/user', label: 'User' },
-          { href: '/student', label: 'Student' },
-          { href: '/professor', label: 'Professor' },
+          { href: '/courses', label: 'Courses' },
+          { href: '/coursework', label: 'Resources' },
+          { href: '/search', label: 'Lectures Summarizer' },
+          { href: '/tasks', label: 'Assignments' },
+          { href: '/pdf', label: 'PDF Summarizer' },
+          //{ href: '/addCourses', label: 'AddCourses' },
+          //{ href: '/collections', label: 'Collection' },
           { href: '/summariser', label: 'Summarise' },
           { href: '/explainer', label: 'Explain' },
-          { href: '/flash-card-generator', label: 'Flash Card' }
+          { href: '/flash-card-generator', label: 'Flash Card' },
+          //{ href: '/user', label: 'User' },
+          //{ href: '/student', label: 'Student' },
+          //{ href: '/professor', label: 'Professor' },
         );
       } else if (role === 'student') {
         drawerLinks.push(
-          { href: '/courses', label: 'Subjects' },
-          { href: '/collections', label: 'Collections' },
-          { href: '/tasks', label: 'Task' },
-          { href: '/coursework', label: 'CourseWork' },
+          { href: '/studentcourseview', label: 'Courses' },
+          { href: '/tasks', label: 'Assignments' },
           { href: '/search', label: 'Zoom Lectures' },
-          { href: '/pdf', label: 'PDF' },
-          { href: '/user', label: 'User' },
-          { href: '/student', label: 'Student' },
-          { href: '/professor', label: 'Professor' },
           { href: '/summariser', label: 'Summarise' },
           { href: '/explainer', label: 'Explain' },
-          { href: '/flash-card-generator', label: 'Flash Card' }
+          { href: '/flash-card-generator', label: 'Flash Card' },
+          { href: '/collections', label: 'Collections' },
+          { href: '/coursework', label: 'CourseWork' },
+          { href: '/pdf', label: 'Sumaarize PDF' },
+          //{ href: '/user', label: 'User' },
+          //{ href: '/student', label: 'Student' },
+          //{ href: '/professor', label: 'Professor' },
         );
       }
     }

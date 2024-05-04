@@ -12,6 +12,15 @@ interface MenuItemsProps {
   links: Array<MenuLinkProps>;
 }
 
+// In your page component file or wherever MenuItems is used
+export async function getServerSideProps(context) {
+  const session = getSession(context.req); // Pass the request to getSession if needed
+  return {
+    props: { session }, // Pass session data as props
+  };
+}
+
+
 export const MenuItems = ({ isOpen = false, links }: MenuItemsProps) => {
   const router = useRouter();
   const { isLoggedIn, username, role } = getSession()

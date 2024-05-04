@@ -12,6 +12,7 @@ import TeacherDashboard from '@/components/promo/TeacherDashboard';
 import AdminDashboard from '@/components/promo/AdminDashboard';
 import { getSession } from './session';
 
+
 export default function Home() {
   
   const router = useRouter();

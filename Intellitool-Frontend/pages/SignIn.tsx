@@ -26,7 +26,7 @@ function SignInForm() {
     const { email, password, role } = state;
 
     // Check if email, password, and role match the hardcoded values
-    if (email === "shwetha@gmail.com" && password === "1234" && role === "teacher") {
+    if (email === "girish@gmail.com" && password === "1234" && role === "teacher") {
       // Store session
       setSession(true, email, role);
       // Redirect to Home component upon successful login
