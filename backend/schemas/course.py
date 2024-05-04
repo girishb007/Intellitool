@@ -10,3 +10,13 @@ class ProfAddCourse(BaseModel):
     zoom: str
     assignments: List[str] = []
 
+class ProfAddAssign(BaseModel):
+    id: str
+    name: str
+    courseId: int
+    courseName: str
+    description: str
+    posted: str
+    deadline: str
+
+

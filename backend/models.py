@@ -61,7 +61,13 @@ class CourseModel(Base):
     zoom = Column(String,nullable=False)
     assignments = Column(JSON, nullable=False, default=[])  # Using JSON datatype for storing lists
 
+class AssignmentModel(Base):
+    __tablename__ = "assignment"
 
-
-
-    
+    id = Column(Integer,primary_key=True,nullable=False)
+    name = Column(String,nullable=False)
+    description = Column(String,nullable=True)
+    courseId = Column(Integer, nullable=True)
+    courseName = Column(String, nullable=False)
+    posted = Column(String, nullable=True)
+    deadline = Column(String, nullable=True)

@@ -2,22 +2,26 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# user = os.environ["DB_USER"]
-# password = os.environ["DB_PASS"]
-# host = os.environ["DB_HOST"]
-# port = os.environ["DB_PORT"]
-# database = os.environ["DB_NAME"]
+# Define your database credentials and parameters
+DB_USER = "postgres"
+DB_PASS = "1234"  # Hardcoded password
+DB_HOST = "localhost"
+DB_PORT = "5432"  # Default PostgreSQL port
+DB_NAME = "intellitool"
 
-# SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{password}@{host}:{port}/{database}"
+# Construct the database URL using the credentials
+SQLALCHEMY_DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
-SQLALCHEMY_DATABASE_URL = 'postgresql://admin:1234@localhost/intellitool'
-
+# Create the SQL Alchemy engine
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
+# Create a configured "Session" class
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+# Create a base class for your declarative class definitions
 Base = declarative_base()
 
+# Function to get database session
 def get_db():
     db = SessionLocal()
     try:
