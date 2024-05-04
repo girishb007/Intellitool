@@ -11,7 +11,7 @@ log = logging.getLogger(__name__)
 router = APIRouter()
 
 @router.get("/courses")
-def get_course(
+def get_courses(
     prof_id: str = None,
     db: Session = Depends(get_db)
 ):  
@@ -40,21 +40,20 @@ def get_course(
     course = query.all()  # Execute the query to get all courses
     return course
 
-@router.get("/assignments")
+@router.get("/course/assignments")
 def get_assignments(
-    response: Response,
     courseName: str = None,
     db: Session = Depends(get_db)
 ):
     print("Start")
-    if not course:
+    if not courseName:
         return {"error": "Send course name as the params"}
     query: Query = db.query(AssignmentModel)
     query = query.filter(AssignmentModel.courseName == courseName)
     assignments = query.all()
     return assignments
 
-@router.post("/addAssignments")
+@router.post("/course/addAssignments")
 def add_assignments(
     response: Response,
     body: List[course.ProfAddAssign],
