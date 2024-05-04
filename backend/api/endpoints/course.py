@@ -42,14 +42,14 @@ def get_course(
 
 @router.get("/course/assignments")
 def get_assignments(
-    courseName: str = None,
+    courseId: str = int,
     db: Session = Depends(get_db)
 ):
-    print("Start")
-    if not courseName:
-        return {"error": "Send course name as the params"}
+    if courseId is None:
+        return {"error": "Send courseName/courseId as the params"}
     query: Query = db.query(AssignmentModel)
-    query = query.filter(AssignmentModel.courseName == courseName)
+    if courseId is not None:
+        query = query.filter(AssignmentModel.courseId == courseId)
     assignments = query.all()
     return assignments
 

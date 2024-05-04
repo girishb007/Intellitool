@@ -7,3 +7,4 @@ psycopg2==2.9.9
 python-multipart==0.0.9
 boto3==1.34.98
 openai==1.25.1
+movie==1.0.3
