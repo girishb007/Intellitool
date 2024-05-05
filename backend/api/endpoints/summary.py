@@ -1,10 +1,5 @@
 import logging
-from fastapi import APIRouter, File, Response, Depends, HTTPException, UploadFile
-from schemas import user
-from sqlalchemy.orm import Session, Query
-from sqlalchemy.exc import IntegrityError
-from db.database import get_db
-from models import UserModel
+from fastapi import APIRouter, File, UploadFile
 import os
 import boto3
 from openai import OpenAI
