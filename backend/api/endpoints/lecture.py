@@ -43,17 +43,17 @@ async def upload_lectures(
     video_url = pdf_url = image_url = None  # Initialize URLs to None
 
     if video:
-        video_url = await utils.upload_file_to_s3(video, 'your-s3-bucket-name', f"videos/{video.filename}")
+        video_url = await utils.uploadFileToS3(video, 'your-s3-bucket-name', f"videos/{video.filename}")
         video_text = await utils.extract_text_from_video(video.file)
         contents += "Video transcripts:\n" + video_text
     
     if pdf:
-        pdf_url = await utils.upload_file_to_s3(pdf, 'your-s3-bucket-name', f"pdfs/{pdf.filename}")
+        pdf_url = await utils.uploadFileToS3(pdf, 'your-s3-bucket-name', f"pdfs/{pdf.filename}")
         pdf_text = await utils.extract_text_from_pdf(pdf.file)
         contents += "PDF texts:\n" + pdf_text
         
     if image:
-        image_url = await utils.upload_file_to_s3(image, 'your-s3-bucket-name', f"images/{image.filename}")
+        image_url = await utils.uploadFileToS3(image, 'your-s3-bucket-name', f"images/{image.filename}")
         image_text = await utils.extract_text_from_image(image.file)
         contents += "Image texts:\n" + image_text
         
