@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "8976c14e-85fa-4cf7-bc70-22cfdf37be73",
+		"_postman_id": "a8139161-d0ec-446b-a3c7-fd3383b26f4e",
 		"name": "Intellitool",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30811179"
+		"_exporter_id": "27881202"
 	},
 	"item": [
 		{
@@ -176,7 +176,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"course_ids\": [\"E10\"]\n}",
+							"raw": "{\n    \"courses\": [\"E10\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"

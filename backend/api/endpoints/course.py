@@ -42,7 +42,7 @@ def get_course(
 
 @router.get("/course/assignments")
 def get_assignments(
-    courseId: str = int,
+    courseId: int = int,
     db: Session = Depends(get_db)
 ):
     if courseId is None:
