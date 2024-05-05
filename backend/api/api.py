@@ -2,7 +2,7 @@ from fastapi import APIRouter, Response, Request, Query
 
 from pydantic import BaseModel
 from typing import List, Optional
-from api.endpoints import user, professor, admin, course, summary, student
+from api.endpoints import user, professor, admin, course, summary, student, lecture
 
 router = APIRouter()
 
@@ -13,4 +13,5 @@ router.include_router(professor.router)
 router.include_router(admin.router)
 router.include_router(course.router)
 router.include_router(summary.router)
+router.include_router(lecture.router)
 

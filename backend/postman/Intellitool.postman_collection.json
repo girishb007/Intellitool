@@ -156,7 +156,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "localhost:8000/intellitool/students",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"intellitool",
+								"students"
+							]
 						}
 					},
 					"response": []
@@ -315,7 +323,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8000/intellitool/course/assignments?courseName=Python",
+							"raw": "localhost:8000/intellitool/course/assignments?courseId=111",
 							"host": [
 								"localhost"
 							],
@@ -328,7 +336,12 @@
 							"query": [
 								{
 									"key": "courseName",
-									"value": "Python"
+									"value": "Python",
+									"disabled": true
+								},
+								{
+									"key": "courseId",
+									"value": "111"
 								}
 							]
 						}
@@ -382,6 +395,36 @@
 							"path": [
 								"intellitool",
 								"addUser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "lecture",
+			"item": [
+				{
+					"name": "lectures",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/intellitool/lectures?courseId=111",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"intellitool",
+								"lectures"
+							],
+							"query": [
+								{
+									"key": "courseId",
+									"value": "111"
+								}
 							]
 						}
 					},

@@ -71,3 +71,27 @@ class AssignmentModel(Base):
     courseName = Column(String, nullable=False)
     posted = Column(String, nullable=True)
     deadline = Column(String, nullable=True)
+
+class LectureModel(Base):
+    __tablename__ = "lecture"
+
+    id = Column(Integer, primary_key=True, nullable=False)
+    name = Column(String, nullable=False)
+    date = Column(String, nullable=True)
+    courseId = Column(Integer, nullable=False)
+    courseName = Column(String, nullable=True)
+    content = Column(String, nullable=True)
+    videoURL = Column(String, nullable=True)
+    pdfURL = Column(String, nullable=True)
+
+class SummaryModel(Base):
+    __tablename__ = "summary"
+
+    id = Column(Integer, primary_key=True, nullable=False)
+    name = Column(String, nullable=False)
+    content = Column(String, nullable=False)
+    date = Column(String, nullable=True)
+    courseId = Column(Integer, nullable=False)
+    courseName = Column(String, nullable=True)
+    
+    
