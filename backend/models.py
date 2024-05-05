@@ -91,6 +91,7 @@ class SummaryModel(Base):
     id = Column(Integer, primary_key=True, nullable=False)
     name = Column(String, nullable=False)
     content = Column(String, nullable=False)
+    lectureNames = Column(JSON, nullable=False, default=[])
     date = Column(String, nullable=True)
     courseId = Column(Integer, nullable=False)
     courseName = Column(String, nullable=True)

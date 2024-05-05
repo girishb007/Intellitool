@@ -1,9 +1,14 @@
-from fastapi import APIRouter, File, UploadFile
+from fastapi import APIRouter, File, UploadFile, Depends, HTTPException
 import os
 import boto3
+from schemas import summary
 import time
 from openai import OpenAI
+from sqlalchemy.exc import IntegrityError
 from moviepy import editor as mp
+from db.database import get_db
+from models import SummaryModel
+from sqlalchemy.orm import Session, Query
 import requests
 
 
@@ -11,7 +16,47 @@ OpenAI.api_key = 'sk-proj-Q3Em8tl42Ds1GkUPFI3nT3BlbkFJjeoEbGc0fTlSCTRp5KXk'
 os.environ['OPENAI_API_KEY'] = 'sk-proj-Q3Em8tl42Ds1GkUPFI3nT3BlbkFJjeoEbGc0fTlSCTRp5KXk'
 client = OpenAI()
 headers = {'X-Api-Key': 'r4x5F8y97lo8UjOGQEBLgQ==R8XwEAYA0hAo1kAt'}
+
 router = APIRouter()
+
+@router.get("/summary")
+def get_summary(
+    courseId: str = None,
+    db: Session = Depends(get_db)
+):  
+    """
+    API endpoint to get all lectures.
+    Params:
+    """
+    query: Query = db.query(SummaryModel)
+    if courseId is None:
+        return {"error": "pass courseId as the param"}
+    query = query.filter(SummaryModel.courseId == courseId) 
+    lectures = query.all()
+    return lectures
+
+@router.post("/addSummary")
+def add_summary(
+    body: summary.CreateSummary,
+    db: Session = Depends(get_db)
+):  
+    """
+    API endpoint to dump summary to DB.
+    """
+    exists_summary = db.query(SummaryModel).filter(SummaryModel.id == body.id).first()
+    if exists_summary:
+        raise HTTPException(status_code=400, detail="Summary with the same id already exists")
+
+    try:
+        new_summary = SummaryModel(**body.dict())
+        db.add(new_summary)
+        db.commit()
+        db.refresh(new_summary)
+        return "Success"
+    except IntegrityError:
+        raise HTTPException(status_code=500, detail="Failed to add Summary due to database integrity error")
+
+###########################
 
 @router.get("/downloadFileFromS3")
 def getFileFromS3():

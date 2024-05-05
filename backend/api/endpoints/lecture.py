@@ -11,6 +11,22 @@ log = logging.getLogger(__name__)
 
 router = APIRouter()
 
+@router.get("/lectures")
+def get_lectures(
+    courseId: str = None,
+    db: Session = Depends(get_db)
+):  
+    """
+    API endpoint to get all lectures.
+    Params:
+    """
+    query: Query = db.query(LectureModel)
+    if courseId is None:
+        return {"error": "pass courseId as the param"}
+    query = query.filter(LectureModel.courseId == courseId) 
+    lectures = query.all()
+    return lectures
+
 @router.post("/uploadLecture/")
 async def upload_lectures(
     id: int = Form(...),
@@ -23,7 +39,7 @@ async def upload_lectures(
     image: UploadFile = File(None),
     db: Session = Depends(get_db)
 ):
-    contents = "Lecture contents:\n"
+    contents = "Lecture contents: \n"
     video_url = pdf_url = image_url = None  # Initialize URLs to None
 
     if video:
@@ -62,3 +78,5 @@ async def upload_lectures(
         "pdf_url": pdf_url,
         "image_url": image_url
     }
+
+
