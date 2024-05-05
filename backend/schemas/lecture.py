@@ -10,3 +10,4 @@ class UploadLecture(BaseModel):
     content: str = None
     videoURL: str = None
     pdfURL: str = None
+    imageURL: str = None

@@ -83,6 +83,7 @@ class LectureModel(Base):
     content = Column(String, nullable=True)
     videoURL = Column(String, nullable=True)
     pdfURL = Column(String, nullable=True)
+    imageURL = Column(String, nullable=True)
 
 class SummaryModel(Base):
     __tablename__ = "summary"

@@ -18,6 +18,7 @@ To run locally:
 ```
 pip install -r requirements.txt
 uvicorn main:app --reload
+// python3.10 -m uvicorn main:app --reload 
 ```
 
 ## DEBUG
