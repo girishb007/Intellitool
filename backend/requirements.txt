@@ -9,3 +9,4 @@ boto3==1.34.98
 openai==1.25.1
 moviepy==1.0.3
 python-multipart==0.0.9
+requests==2.31.0
