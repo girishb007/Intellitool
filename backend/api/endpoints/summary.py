@@ -24,7 +24,6 @@ def testConn():
 
     return transcript.text
 
-@router.get("/videoToAudioConverter")
 def convertVideo():
     # Insert Local Video File Path 
     clip = mp.VideoFileClip(r"/Users/spartan/Desktop/testvideofile.mov")
