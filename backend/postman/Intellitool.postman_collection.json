@@ -498,6 +498,64 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "summary",
+			"item": [
+				{
+					"name": "summary",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/intellitool/summary?courseId=111",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"intellitool",
+								"summary"
+							],
+							"query": [
+								{
+									"key": "courseId",
+									"value": "111"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addSummary",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"name\": \"Lecture 1 summary\",\n    \"content\": \" Content of the summary\",\n    \"lectureNames\": [\"Lecture 1\"],\n    \"date\": \"\",\n    \"courseId\": 111,\n    \"courseName\": \"Python\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/intellitool/addSummary",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"intellitool",
+								"addSummary"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
