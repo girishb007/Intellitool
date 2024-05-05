@@ -25,10 +25,7 @@ def testConn():
     return transcript.text
 
 def convertVideo():
-    # Insert Local Video File Path 
     clip = mp.VideoFileClip(r"/Users/spartan/Desktop/testvideofile.mov")
-    
-    # Insert Local Audio File Path
     clip.audio.write_audiofile(r"/Users/spartan/Desktop/convertedvideofile.mp3")
 
 @router.get("/downloadfile")
@@ -50,7 +47,7 @@ def uploadFileToS3(file_name, bucket, object_name=None):
     return True
 
 @router.post("/uploadFile")
-async def upload_image(upload_file:UploadFile =File(...)):
+async def uploadFileToS3(upload_file:UploadFile =File(...)):
 
     if '.jpg' in upload_file.filename or '.jpeg' in upload_file.filename or '.png' in upload_file.filename or '.pdf' in upload_file.filename or '.mp3' in upload_file.filename or '.mp4' in upload_file.filename:
         file_save_path="./uploads/"+upload_file.filename
@@ -60,11 +57,9 @@ async def upload_image(upload_file:UploadFile =File(...)):
         with open(file_save_path, "wb") as f:
             f.write(upload_file.file.read())
 
-        uploadFileToS3(file_name=file_save_path, bucket='intellitool-bucket')
-
-        if os.path.exists(file_save_path):
-            return {"File save path":file_save_path,"message": "File saved successfully"}
+        if uploadFileToS3(file_name=file_save_path, bucket='intellitool-bucket'):
+            return "File uploaded to S3 server successfully"
         else:
-            return {"error":"File Not saved !!!"}
+            return "File couldn't be uploaded to S3. Please try again"
     else:
         return {"error": "File Type is not valid please upload only jpg,jpeg, png, pdf, mp3 and .mp4 only"}
