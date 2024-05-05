@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Box, Button, Input, Select, Textarea, Checkbox, CheckboxGroup, Stack, useToast, FormControl, FormLabel, Flex } from '@chakra-ui/react';
 
 const CourseManagement = ({ professorId }) => {
     const [course, setCourse] = useState({
+        id: '',
         name: '',
         description: '',
         term: '',
@@ -13,6 +14,7 @@ const CourseManagement = ({ professorId }) => {
         previousPapers: []
     });
     const toast = useToast();
+    const courseIdRef = useRef(0); // Using useRef to keep track of the last ID used
 
     const handleInputChange = (e) => {
         setCourse({ ...course, [e.target.name]: e.target.value });
@@ -32,45 +34,68 @@ const CourseManagement = ({ professorId }) => {
         "Midterm 2",
         "Project Demo"
     ];
+    // Define term options
+    const termOptions = [
+        "Fall 2022", "Spring 2023", "Fall 2023", "Spring 2024"
+    ];
 
     const addCourse = async () => {
-        const formData = new FormData();
-        formData.append('name', course.name);
-        formData.append('description', course.description);
-        formData.append('term', course.term);
-        formData.append('zoom', course.zoom);
-        course.lectureNotes.forEach(file => formData.append('lectureNotes', file));
-        course.assignmentFiles.forEach(file => formData.append('assignmentFiles', file));
-        course.previousPapers.forEach(file => formData.append('previousPapers', file));
-
-        const response = await fetch(`http://localhost:8000/intellitool/addCourse?professor=${professorId}`, {
-            method: 'POST',
-            body: formData
-        });
-
-        if (response.ok) {
-            toast({
-                title: 'Course added successfully',
-                status: 'success',
-                duration: 2000,
-                isClosable: true,
+        const data = [{
+            id: course.id,  // Auto-incremented ID
+            name: course.name,
+            description: course.description,
+            term: course.term,
+            zoom: course.zoom
+        }];
+    
+        courseIdRef.current += 1; // Increment the ID for next use
+    
+        // Construct the URL with the query parameter
+        const url = new URL(`http://localhost:8000/intellitool/profAddCourse`);
+        url.searchParams.append("professor", "Ken Youseffi"); // Append the 'professor' query parameter
+    
+        try {
+            const response = await fetch(url, {  // Use the constructed URL with the query parameter
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
             });
-        } else {
+    
+            if (response.ok) {
+                toast({
+                    title: 'Course added successfully',
+                    status: 'success',
+                    duration: 2000,
+                    isClosable: true,
+                });
+            } else {
+                const errorText = await response.text(); // Getting more details from the response body
+                throw new Error(errorText);
+            }
+        } catch (error) {
             toast({
                 title: 'Error adding course',
-                description: response.statusText,
+                description: error.message,
                 status: 'error',
                 duration: 2000,
                 isClosable: true,
             });
         }
     };
-
+    
+    
     return (
         <Box p={5}>
+            <Input placeholder="Course ID" value={course.id} onChange={handleInputChange} name="id" />
             <Input placeholder="Course Name" value={course.name} onChange={handleInputChange} name="name" />
             <Textarea placeholder="Course Description" value={course.description} onChange={handleInputChange} name="description" mt={2} />
-            <Select placeholder="Select term" value={course.term} onChange={handleInputChange} name="term" mt={2} />
+            <Select placeholder="Select term" value={course.term} onChange={handleInputChange} name="term" mt={2}>
+                {termOptions.map((term, index) => (
+                    <option key={index} value={term}>{term}</option>
+                ))}
+            </Select>
             <Input placeholder="Zoom Link" value={course.zoom} onChange={handleInputChange} name="zoom" mt={2} />
             <CheckboxGroup colorScheme="blue" onChange={handleAssignmentChange} value={course.assignments}>
                 <Stack mt={2}>

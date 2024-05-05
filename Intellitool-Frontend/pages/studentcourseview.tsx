@@ -59,8 +59,8 @@ const CoursesDisplay = () => {
     return (
       <>
         <Box p={5}>
-          <Link href="/addCourses" passHref>
-            <Button as="a" backgroundColor="#FF8BA7">Enrolled Courses</Button>
+          <Link href="/enrollcourse" passHref>
+            <Button as="a" backgroundColor="#FF8BA7">Enroll for New Courses</Button>
           </Link>
         </Box>
         <Box px={5} className="masonry-grid">

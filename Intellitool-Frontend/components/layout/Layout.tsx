@@ -37,6 +37,7 @@
         drawerLinks.push(
           { href: '/courses', label: 'Courses' },
           { href: '/coursework', label: 'Resources' },
+          { href: '/assignments', label: 'Add Assignments' },
           { href: '/search', label: 'Lectures Summarizer' },
           { href: '/tasks', label: 'Assignments' },
           { href: '/pdf', label: 'PDF Summarizer' },
@@ -51,7 +52,7 @@
         );
       } else if (role === 'student') {
         drawerLinks.push(
-          { href: '/studentcourseview', label: 'Courses' },
+          { href: '/studentcourseview', label: 'Enrolled Courses' },
           { href: '/tasks', label: 'Assignments' },
           { href: '/search', label: 'Zoom Lectures' },
           { href: '/summariser', label: 'Summarise' },
