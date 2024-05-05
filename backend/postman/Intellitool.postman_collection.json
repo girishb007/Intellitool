@@ -429,6 +429,73 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "uploadLecture",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "video",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								},
+								{
+									"key": "pdf",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								},
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Lecture 1",
+									"type": "text"
+								},
+								{
+									"key": "date",
+									"value": "5th May 2024",
+									"type": "text"
+								},
+								{
+									"key": "courseId",
+									"value": "111",
+									"type": "text"
+								},
+								{
+									"key": "courseName",
+									"value": "Python",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/intellitool/uploadLecture",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"intellitool",
+								"uploadLecture"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
