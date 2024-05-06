@@ -1,3 +1,4 @@
+import os
 from fastapi import APIRouter, Response, Depends, status, File, UploadFile, Form
 from schemas import lecture
 from typing import List
@@ -45,17 +46,24 @@ async def upload_lectures(
 
 
     if video:
-        video_url = await utils.uploadFileToS3(video, 'your-s3-bucket-name', f"videos/{video.filename}")
+        file_save_path="./uploads/"+video.filename
+        if os.path.exists("./uploads") == False:
+            os.makedirs("./uploads")
+
+        with open(file_save_path, "wb") as f:
+            f.write(video.file.read())
+
+        video_url = await utils.uploadFileToS3(video, 'intellitool-bucket', f"videos/{video.filename}")
         video_text = await utils.extract_text_from_video(video.file)
         contents += "Video transcripts:\n" + video_text
     
     if pdf:
-        pdf_url = await utils.uploadFileToS3(pdf, 'your-s3-bucket-name', f"pdfs/{pdf.filename}")
+        pdf_url = await utils.uploadFileToS3(pdf, 'intellitool-bucket', f"pdfs/{pdf.filename}")
         pdf_text = await utils.extract_text_from_pdf(pdf.file)
         contents += "PDF texts:\n" + pdf_text
         
     if image:
-        image_url = await utils.uploadFileToS3(image, 'your-s3-bucket-name', f"images/{image.filename}")
+        image_url = await utils.uploadFileToS3(image, 'intellitool-bucket', f"images/{image.filename}")
         image_text = await utils.extract_text_from_image(image.file)
         contents += "Image texts:\n" + image_text
         
