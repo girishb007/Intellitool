@@ -5,7 +5,6 @@ from db.database import get_db
 from models import LectureModel
 from api import utils
 import logging
-import logging
 
 
 log = logging.getLogger(__name__)
