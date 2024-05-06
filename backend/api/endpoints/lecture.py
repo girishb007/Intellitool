@@ -5,9 +5,15 @@ from db.database import get_db
 from models import LectureModel
 from api import utils
 import logging
+import boto3
+from openai import OpenAI
+from moviepy import editor as mp
+
 
 
 log = logging.getLogger(__name__)
+s3_client = boto3.client('s3', aws_access_key_id="AKIA3FO4UZ66TYQMK6NB" , aws_secret_access_key="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")
+client = OpenAI
 
 router = APIRouter()
 
@@ -48,15 +54,13 @@ async def upload_lectures(
         file_save_path="./uploads/"+video.filename
         if os.path.exists("./uploads") == False:
             os.makedirs("./uploads")
-
         with open(file_save_path, "wb") as f:
             f.write(video.file.read())
 
-        video_url = await utils.uploadFileToS3(file_name=video, bucket='intellitool-bucket', object_name=file_save_path)
-        video_text = await utils.extractTextFromVideo(video.file)
+        video_url = await uploadFile(file_name=file_save_path, bucket='intellitool-bucket')
+        
+        video_text = await extractTextFromVideo(file_save_path)
         contents += "Video transcripts:\n" + video_text
-
-        print(f"Contests is: {contents}")
     
     if pdf:
         pdf_url = await utils.uploadFileToS3(pdf, 'intellitool-bucket', f"pdfs/{pdf.filename}")
@@ -87,7 +91,37 @@ async def upload_lectures(
         "message": "Lecture uploaded successfully",
         "video_url": video_url,
         "pdf_url": pdf_url,
-        "image_url": image_url
+        "image_url": image_url,
+        "content": video_text
     }
 
+async def uploadFile(file_name, bucket):
 
+    object_name = os.path.basename(file_name)
+
+    noException = True
+
+    s3 = boto3.client('s3', aws_access_key_id="AKIA3FO4UZ66TYQMK6NB" , aws_secret_access_key="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")
+    try:
+        response = s3.upload_file(file_name, bucket, object_name)
+    except Exception as e:
+        return f"https://s3.amazonaws.com/intellitool-bucket/.{file_name}"
+
+async def extractTextFromVideo(file_name):
+## Converting video to mp3 because whisper AI APIs has size restriction of upto 25MB on file sizes.
+    try:
+        clip = mp.VideoFileClip(file_name)
+        clip.audio.write_audiofile("./converted_video.mp3")
+    except Exception as e:
+        print(f"Caught exception while converting video tp Mp3: {e}")
+    try:
+        client = OpenAI()
+        audio_file = open("./converted_video.mp3", "rb")
+        transcript = client.audio.transcriptions.create(
+        model="whisper-1", 
+        file=audio_file
+        )
+        return transcript.text 
+    except Exception as e:
+        print(f"Caught exception while extracting text from video: {e}")
+        return ""

@@ -7,9 +7,9 @@ from moviepy import editor as mp
 s3_client = boto3.client('s3', aws_access_key_id="AKIA3FO4UZ66TYQMK6NB" , aws_secret_access_key="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")
 client = OpenAI
 
-async def uploadFileToS3(file_name, bucket, object_name=None):
-    if object_name is None:
-        object_name = os.path.basename(file_name)
+async def uploadFileToS3(file_name, bucket):
+  
+    object_name = os.path.basename(file_name)
 
     noException = True
 
@@ -25,7 +25,7 @@ async def extractTextFromVideo(file_name):
 ## Converting video to mp3 because whisper AI APIs has size restriction of upto 25MB on file sizes.
     try:
         clip = mp.VideoFileClip(file_name)
-        clip.audio.write_audiofile("../../converted_video.mp3")
+        clip.audio.write_audiofile("../converted_video.mp3")
     except Exception as e:
         print(f"Caught exception while converting video tp Mp3: {e}")
     try:
