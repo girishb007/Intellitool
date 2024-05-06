@@ -1,7 +1,5 @@
 import boto3
-import logging
 import os
-from fastapi import HTTPException
 from openai import OpenAI
 from moviepy import editor as mp
 
