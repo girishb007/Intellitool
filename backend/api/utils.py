@@ -7,9 +7,9 @@ from moviepy import editor as mp
 
 
 s3_client = boto3.client('s3', aws_access_key_id="AKIA3FO4UZ66TYQMK6NB" , aws_secret_access_key="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")
+client = OpenAI
 
-
-def uploadFileToS3(file_name, bucket, object_name=None):
+async def uploadFileToS3(file_name, bucket, object_name=None):
     if object_name is None:
         object_name = os.path.basename(file_name)
 
@@ -21,17 +21,28 @@ def uploadFileToS3(file_name, bucket, object_name=None):
         print(f"Got this repsonse from S3: {response} ")
     except Exception as e:
         print(f"Caught exception while uploading file to S3: {e}" )
-    return noException
+    return f"https://s3.amazonaws.com/intellitool-bucket/{file_name}"
    
-def convertVideoToMp3(file_name):
+async def extractTextFromVideo(file_name):
+## Converting video to mp3 because whisper AI APIs has size restriction of upto 25MB on file sizes.
     try:
         clip = mp.VideoFileClip(file_name)
         clip.audio.write_audiofile("../../converted_video.mp3")
     except Exception as e:
         print(f"Caught exception while converting video tp Mp3: {e}")
+    try:
+        audio_file = open("converted_video.mp3", "rb")
+        transcript = client.audio.transcriptions.create(
+        model="whisper-1", 
+        file=audio_file
+        )
+        return transcript.text 
+    except Exception as e:
+        print(f"Caught exception while extracting text from video: {e}")
+        return ""
 
 
-def getTextFromImage(fileName):
+async def getTextFromImage(fileName):
     print("Getting text from Image")
     api_url = 'https://api.api-ninjas.com/v1/imagetotext'
     image_file_descriptor = open(fileName, 'rb')

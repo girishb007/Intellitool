@@ -1,12 +1,12 @@
 import os
-from fastapi import APIRouter, Response, Depends, status, File, UploadFile, Form
-from schemas import lecture
-from typing import List
+from fastapi import APIRouter, Depends, File, UploadFile, Form
 from sqlalchemy.orm import Session, Query
 from db.database import get_db
 from models import LectureModel
 from api import utils
 import logging
+import logging
+
 
 log = logging.getLogger(__name__)
 
@@ -28,7 +28,7 @@ def get_lectures(
     lectures = query.all()
     return lectures
 
-@router.post("/uploadLecture/")
+@router.post("/uploadLecture")
 async def upload_lectures(
     id: int = Form(...),
     name: str = Form(...),
@@ -53,9 +53,11 @@ async def upload_lectures(
         with open(file_save_path, "wb") as f:
             f.write(video.file.read())
 
-        video_url = await utils.uploadFileToS3(video, 'intellitool-bucket', f"videos/{video.filename}")
-        video_text = await utils.extract_text_from_video(video.file)
+        video_url = await utils.uploadFileToS3(file_name=video, bucket='intellitool-bucket', object_name=file_save_path)
+        video_text = await utils.extractTextFromVideo(video.file)
         contents += "Video transcripts:\n" + video_text
+
+        print(f"Contests is: {contents}")
     
     if pdf:
         pdf_url = await utils.uploadFileToS3(pdf, 'intellitool-bucket', f"pdfs/{pdf.filename}")
