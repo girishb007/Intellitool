@@ -34,13 +34,15 @@ async def upload_lectures(
     date: str = Form(...),
     courseId: int = Form(...),
     courseName: str = Form(...),
-    video: UploadFile = File(None),
+    video: UploadFile = File(...),
     pdf: UploadFile = File(None),
     image: UploadFile = File(None),
     db: Session = Depends(get_db)
 ):
     contents = "Lecture contents: \n"
     video_url = pdf_url = image_url = None  # Initialize URLs to None
+
+
 
     if video:
         video_url = await utils.uploadFileToS3(video, 'your-s3-bucket-name', f"videos/{video.filename}")
