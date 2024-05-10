@@ -40,7 +40,7 @@ async def upload_lectures(
     date: str = Form(...),
     courseId: int = Form(...),
     courseName: str = Form(...),
-    video: UploadFile = File(...),
+    video: UploadFile = File(None),
     pdf: UploadFile = File(None),
     image: UploadFile = File(None),
     db: Session = Depends(get_db)
@@ -63,13 +63,25 @@ async def upload_lectures(
         contents += "Video transcripts:\n" + video_text
     
     if pdf:
-        pdf_url = await utils.uploadFileToS3(pdf, 'intellitool-bucket', f"pdfs/{pdf.filename}")
-        pdf_text = await utils.extract_text_from_pdf(pdf.file)
+        file_save_path="./uploads/"+pdf.filename
+        if os.path.exists("./uploads") == False:
+            os.makedirs("./uploads")
+        with open(file_save_path, "wb") as f:
+            f.write(pdf.file.read())
+        # pdf_url = await utils.uploadFileToS3(pdf, 'intellitool-bucket', f"pdfs/{pdf.filename}")
+        pdf_url = await uploadFile(file_name=file_save_path, bucket='intellitool-bucket')
+        pdf_text = await utils.extractTextFromPdf(pdf.file)
         contents += "PDF texts:\n" + pdf_text
         
     if image:
-        image_url = await utils.uploadFileToS3(image, 'intellitool-bucket', f"images/{image.filename}")
-        image_text = await utils.extract_text_from_image(image.file)
+        file_save_path="./uploads/"+image.filename
+        if os.path.exists("./uploads") == False:
+            os.makedirs("./uploads")
+        with open(file_save_path, "wb") as f:
+            f.write(image.file.read())
+        # image_url = await utils.uploadFileToS3(image, 'intellitool-bucket', f"images/{image.filename}")
+        image_url = await uploadFile(file_name=file_save_path, bucket='intellitool-bucket')
+        image_text = await utils.getTextFromImage(image.file)
         contents += "Image texts:\n" + image_text
         
     # Create a new lecture record
@@ -84,8 +96,8 @@ async def upload_lectures(
         imageURL=image_url,
         content=contents
     )
-    db.add(new_lecture)
-    db.commit()
+    # db.add(new_lecture)
+    # db.commit()
 
     return {
         "message": "Lecture uploaded successfully",

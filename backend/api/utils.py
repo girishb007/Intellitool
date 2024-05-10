@@ -2,6 +2,9 @@ import boto3
 import os
 from openai import OpenAI
 from moviepy import editor as mp
+import PyPDF2
+import pytesseract
+from PIL import Image
 
 
 s3_client = boto3.client('s3', aws_access_key_id="AKIA3FO4UZ66TYQMK6NB" , aws_secret_access_key="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")
@@ -47,3 +50,26 @@ async def getTextFromImage(fileName):
     files = {'image': image_file_descriptor}
     r = requests.post(api_url, files=files, headers=headers)
     print(r.json())
+    
+async def extractTextFromPdf(filename):
+    pdf_reader = PyPDF2.PdfReader(filename)
+    num_pages = len(pdf_reader.pages)
+    text = ''
+    for page_num in range(num_pages):
+        page = pdf_reader.pages[page_num]
+        text += page.extract_text()
+    return text
+
+async def extractTextFromImage(filename):
+    textract = boto3.client('textract')
+    response = textract.detect_document_text(Document={'Bytes': filename})
+    print(response)
+    extracted_text = ''
+    for item in response['Blocks']:
+        if item['BlockType'] == 'LINE':
+            extracted_text += item['Text'] + '\n'
+    return extracted_text
+    
+    # image = Image.open(filename)
+    # text = pytesseract.image_to_string(image)
+    # return text

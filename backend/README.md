@@ -16,7 +16,7 @@ alias python=python3.10
 
 To run locally:
 ```
-pip install -r requirements.txt
+python3.10 -m pip install -r requirements.txt
 uvicorn main:app --reload
 // python3.10 -m uvicorn main:app --reload 
 ```
