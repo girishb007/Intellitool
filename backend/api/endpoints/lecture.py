@@ -96,15 +96,15 @@ async def upload_lectures(
         imageURL=image_url,
         content=contents
     )
-    # db.add(new_lecture)
-    # db.commit()
+    db.add(new_lecture)
+    db.commit()
 
     return {
         "message": "Lecture uploaded successfully",
         "video_url": video_url,
         "pdf_url": pdf_url,
         "image_url": image_url,
-        "content": video_text
+        "content": contents
     }
 
 async def uploadFile(file_name, bucket):

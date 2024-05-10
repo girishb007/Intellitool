@@ -129,11 +129,11 @@ async def approve(
                 new_prof.id = user_details.id
                 new_prof.name = user_details.username
                 if prof.field:
-                    new_prof.field = prof.get("field")
+                    new_prof.field = prof.field
                 else:
                     new_prof.field = "Computer Science"
                 if prof.description:
-                    new_prof.description = prof.get("description")
+                    new_prof.description = prof.description
                 else:
                     new_prof.description = ""
                 db.add(new_prof)
